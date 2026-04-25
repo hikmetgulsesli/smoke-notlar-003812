@@ -1,8 +1,10 @@
 import { useNotes } from './hooks/useNotes';
 import { NoteForm } from './components/NoteForm';
+import { NoteCard } from './components/NoteCard';
+import { EmptyState } from './components/EmptyState';
 
 export default function App() {
-  const { notes, addNote } = useNotes();
+  const { notes, addNote, deleteNote, toggleNote } = useNotes();
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--on-surface)]">
@@ -23,26 +25,19 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-4 md:px-6 pt-28 space-y-12 pb-24">
         <NoteForm onAddNote={addNote} />
 
-        {notes.length > 0 && (
+        {notes.length === 0 ? (
+          <EmptyState />
+        ) : (
           <section className="pb-12">
             <h2 className="text-[1.75rem] font-semibold text-[var(--on-surface)] mb-8 font-headline tracking-tight">Son Notlar</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {notes.map((note) => (
-                <article key={note.id} className="bg-[var(--surface-container)] rounded-2xl p-6 hover:bg-[var(--surface-container-high)] transition-colors duration-300 group cursor-pointer relative overflow-hidden flex flex-col h-full border border-transparent hover:border-[var(--outline-variant)]/15">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-[var(--primary)]/20 group-hover:bg-[var(--primary)]/50 transition-colors"></div>
-                  <div className="flex justify-between items-start mb-4 pl-2">
-                    <h3 className="text-[1rem] font-semibold text-[var(--on-surface)] font-headline">{note.title}</h3>
-                  </div>
-                  <p className="text-lg text-[var(--on-surface-variant)] mb-6 flex-grow pl-2 line-clamp-3">
-                    {note.content}
-                  </p>
-                  <div className="flex items-center gap-2 mt-auto pl-2">
-                    <span className="material-symbols-outlined text-[14px] text-[var(--on-surface-variant)]" style={{fontVariationSettings: "'FILL' 0"}}>schedule</span>
-                    <span className="text-[0.75rem] font-semibold text-[var(--on-surface-variant)] font-label tracking-wide">
-                      {new Date(note.createdAt).toLocaleDateString('tr-TR')}
-                    </span>
-                  </div>
-                </article>
+                <NoteCard
+                  key={note.id}
+                  note={note}
+                  onToggle={toggleNote}
+                  onDelete={deleteNote}
+                />
               ))}
             </div>
           </section>

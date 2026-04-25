@@ -24,5 +24,19 @@ export function useNotes() {
     setNotes((current) => [{ id: crypto.randomUUID(), title, content, status: 'active', createdAt: now, updatedAt: now }, ...current]);
   }, []);
 
-  return { notes, completedCount, addNote };
+  const deleteNote = useCallback((id: string) => {
+    setNotes((current) => current.filter((note) => note.id !== id));
+  }, []);
+
+  const toggleNote = useCallback((id: string) => {
+    setNotes((current) =>
+      current.map((note) =>
+        note.id === id
+          ? { ...note, status: note.status === 'active' ? 'completed' : 'active', updatedAt: new Date().toISOString() }
+          : note
+      )
+    );
+  }, []);
+
+  return { notes, completedCount, addNote, deleteNote, toggleNote };
 }
