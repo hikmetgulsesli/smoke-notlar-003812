@@ -8,3 +8,8 @@ export interface Note {
   createdAt: string;
   updatedAt: string;
 }
+
+declare module '*.module.css' {
+  const classes: { [key: string]: string };
+  export default classes;
+}

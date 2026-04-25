@@ -1,4 +1,5 @@
 import { useState, useCallback, FormEvent } from 'react';
+import styles from './NoteForm.module.css';
 
 interface NoteFormProps {
   onAddNote: (title: string, content: string) => void;
@@ -67,15 +68,13 @@ export function NoteForm({ onAddNote }: NoteFormProps) {
   }, [errors.content]);
 
   return (
-    <section className="max-w-3xl mx-auto">
-      <h2 className="text-[1.75rem] font-semibold text-[var(--on-surface)] mb-6 font-headline tracking-tight">Yeni Not Ekle</h2>
-      <div className="bg-[var(--surface-container)] rounded-2xl p-4 md:p-6 shadow-sm border border-[var(--outline-variant)]/15 backdrop-blur-sm">
-        <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-          <div>
+    <section className={styles.formSection}>
+      <h2 className={styles.formHeading}>Yeni Not Ekle</h2>
+      <div className={styles.formContainer}>
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
+          <div className={styles.inputWrapper}>
             <input
-              className={`w-full bg-transparent text-[var(--on-surface)] text-[1rem] font-semibold placeholder-[var(--on-surface-variant)] border-none focus:ring-0 px-4 py-3 outline-none transition-colors ${
-                errors.title ? 'placeholder-[var(--error)]' : ''
-              }`}
+              className={`${styles.titleInput} ${errors.title ? styles.titleInputError : ''}`}
               placeholder="Başlık"
               type="text"
               value={title}
@@ -85,16 +84,14 @@ export function NoteForm({ onAddNote }: NoteFormProps) {
               aria-describedby={errors.title ? 'title-error' : undefined}
             />
             {errors.title && (
-              <p id="title-error" className="text-[var(--error)] text-sm px-4 pt-1" role="alert">
+              <p id="title-error" className={styles.errorText} role="alert">
                 {errors.title}
               </p>
             )}
           </div>
-          <div className="relative">
+          <div className={styles.inputWrapper}>
             <textarea
-              className={`w-full bg-[var(--surface-container-lowest)] text-[var(--on-surface)] placeholder-[var(--on-surface-variant)] border-none rounded-xl focus:ring-1 focus:ring-[var(--primary)]/50 px-4 py-4 resize-none outline-none text-lg transition-all ${
-                errors.content ? 'ring-1 ring-[var(--error)]/50' : ''
-              }`}
+              className={`${styles.contentTextarea} ${errors.content ? styles.contentTextareaError : ''}`}
               placeholder="Açıklama"
               rows={4}
               value={content}
@@ -104,19 +101,19 @@ export function NoteForm({ onAddNote }: NoteFormProps) {
               aria-describedby={errors.content ? 'content-error' : undefined}
             />
             {errors.content && (
-              <p id="content-error" className="text-[var(--error)] text-sm px-4 pt-1" role="alert">
+              <p id="content-error" className={styles.errorText} role="alert">
                 {errors.content}
               </p>
             )}
           </div>
-          <div className="flex justify-end pt-2">
+          <div className={styles.submitRow}>
             <button
-              className="bg-[var(--primary-container)] text-[var(--on-primary-container)] hover:bg-[var(--primary-container)]/90 active:scale-[0.98] transition-all duration-200 px-8 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-sm shadow-[var(--primary)]/10 disabled:opacity-50 disabled:cursor-not-allowed"
+              className={styles.submitButton}
               type="submit"
               disabled={isSubmitting}
               aria-label="Not ekle"
             >
-              <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>add</span>
+              <span className={`material-symbols-outlined ${styles.buttonIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>add</span>
               Ekle
             </button>
           </div>
