@@ -1,0 +1,195 @@
+.card {
+  background-color: var(--color-surface-container);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: opacity 200ms ease, transform 200ms ease, background-color 300ms ease;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  background-color: var(--color-surface-container-high);
+  border-color: var(--color-outline-variant);
+}
+
+.cardContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.leftSection {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Completed state */
+.completed {
+  opacity: 0.6;
+}
+
+/* Deleting animation */
+.deleting {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+/* Checkbox / Toggle button */
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 200ms ease, transform 150ms ease;
+  flex-shrink: 0;
+  margin-top: -4px;
+}
+
+.checkbox:hover {
+  background-color: var(--color-surface-container-high);
+}
+
+.checkbox:active {
+  transform: scale(0.92);
+}
+
+.checkbox span {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* Text content area */
+.textContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Title */
+.title {
+  font-family: var(--font-headline);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  word-wrap: break-word;
+}
+
+.titleCompleted {
+  text-decoration: line-through;
+  color: var(--color-on-surface-variant);
+}
+
+/* Body text */
+.body {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-on-surface-variant);
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.bodyCompleted {
+  text-decoration: line-through;
+  color: var(--color-on-surface-variant);
+  opacity: 0.8;
+}
+
+/* Date */
+.date {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}
+
+/* Delete button */
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 200ms ease, color 200ms ease, opacity 200ms ease, transform 150ms ease;
+  flex-shrink: 0;
+  opacity: 0;
+  margin-top: -4px;
+}
+
+.card:hover .deleteButton,
+.card:focus-within .deleteButton,
+.deleteButton:focus-visible {
+  opacity: 1;
+}
+
+.deleteButton:hover {
+  background-color: var(--color-error-container);
+  color: var(--color-error);
+}
+
+.deleteButton:active {
+  transform: scale(0.92);
+}
+
+.deleteButton span {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Focus visible rings */
+.checkbox:focus-visible,
+.deleteButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .deleting {
+    transition: none;
+  }
+
+  .checkbox,
+  .deleteButton {
+    transition: none;
+  }
+}
+
+/* Mobile: always show delete button */
+@media (max-width: 768px) {
+  .deleteButton {
+    opacity: 1;
+  }
+}
