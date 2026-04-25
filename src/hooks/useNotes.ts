@@ -7,7 +7,8 @@ export function useNotes() {
   const [notes, setNotes] = useState<Note[]>(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) as Note[] : [];
+      const parsed = raw ? JSON.parse(raw) as Note[] : [];
+      return parsed.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     } catch {
       return [];
     }
