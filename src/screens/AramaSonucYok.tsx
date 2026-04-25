@@ -29,7 +29,7 @@ export function AramaSonucYok(props: AramaSonucYokProps) {
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
       <span className="material-symbols-outlined text-outline">search</span>
       </div>
-      <input className="block w-full pl-10 pr-10 py-2 border-none rounded-xl bg-surface-container-high text-on-surface placeholder-on-surface-variant focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-colors duration-200" placeholder="Notlarda ara..." type="text" value="olmayan bir not"/ />
+      <input className="block w-full pl-10 pr-10 py-2 border-none rounded-xl bg-surface-container-high text-on-surface placeholder-on-surface-variant focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-colors duration-200" placeholder="Notlarda ara..." type="text" value="olmayan bir not"/>
       <button className="absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-on-surface">
       <span className="material-symbols-outlined">close</span>
       </button>
@@ -53,7 +53,7 @@ export function AramaSonucYok(props: AramaSonucYokProps) {
       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
       <span className="material-symbols-outlined text-outline">search</span>
       </div>
-      <input className="block w-full pl-12 pr-12 py-4 border-none rounded-2xl bg-surface-container-high text-on-surface placeholder-on-surface-variant focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-colors duration-200 text-lg" placeholder="Notlarda ara..." type="text" value="olmayan bir not"/ />
+      <input className="block w-full pl-12 pr-12 py-4 border-none rounded-2xl bg-surface-container-high text-on-surface placeholder-on-surface-variant focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-colors duration-200 text-lg" placeholder="Notlarda ara..." type="text" value="olmayan bir not"/>
       <button className="absolute inset-y-0 right-0 pr-4 flex items-center text-outline hover:text-on-surface active:scale-95 transition-transform">
       <span className="material-symbols-outlined">close</span>
       </button>

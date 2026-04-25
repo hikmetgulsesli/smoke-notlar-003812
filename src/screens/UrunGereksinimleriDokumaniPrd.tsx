@@ -66,7 +66,7 @@ export function UrunGereksinimleriDokumaniPrd(props: UrunGereksinimleriDokumaniP
       - **Varsayılan durum:** `completed: false`
       - **Hata mesajları:**
         - Boş başlık: "Başlık alanı boş bırakılamaz."
-        - Başlık > 100 karakter: "Başlık en fazla 100 karakter olabilir."
+        - Başlık &gt; 100 karakter: "Başlık en fazla 100 karakter olabilir."
       - **Başarı davranışı:** Yeni kart listenin en üstüne eklenir, form sıfırlanır, input'a odaklanılır.
       
       ### 4.2 Not Kartı Tamamlandı İşaretleme
@@ -88,7 +88,7 @@ export function UrunGereksinimleriDokumaniPrd(props: UrunGereksinimleriDokumaniP
       
       - Tüm notlar kronolojik sırada (en yeni üstte) listelenir.
       - Boş durum: Ortada büyük bir ikon ve mesaj: "Henüz not eklemediniz. Yukarıdaki formu kullanarak ilk notunuzu ekleyin."
-      - Liste performansı: 500 kart kapasitesi hedeflenir (>500 için virtual scroll gerekirse eklenir, başlangıçta gerekmez).
+      - Liste performansı: 500 kart kapasitesi hedeflenir (&gt;500 için virtual scroll gerekirse eklenir, başlangıçta gerekmez).
       
       ### 4.5 localStorage Kalıcılığı
       
@@ -112,13 +112,13 @@ export function UrunGereksinimleriDokumaniPrd(props: UrunGereksinimleriDokumaniP
       ### Entity: Note
       
       ```typescript
-      interface Note {
+      interface Note &#123;
         id:       string;      // crypto.randomUUID()
         title:    string;      // 1-100 karakter
         description: string;   // 0-500 karakter, opsiyonel
         completed: boolean;    // varsayılan: false
         createdAt: string;     // ISO 8601 timestamp
-      }
+      &#125;
       ```
       
       ### localStorage Schema
@@ -191,17 +191,17 @@ export function UrunGereksinimleriDokumaniPrd(props: UrunGereksinimleriDokumaniP
       
       ### 7.1 Performans
       
-      - **İlk yükleme:** < 1.5 saniye (Vite hızlı build hedefi)
-      - **TTI (Time to Interactive):** < 2 saniye
-      - **Bundle budget:** Ana bundle < 150KB gzipped
-      - **State güncellemesi:** Her işlem < 16ms (60fps korunur)
+      - **İlk yükleme:** &lt; 1.5 saniye (Vite hızlı build hedefi)
+      - **TTI (Time to Interactive):** &lt; 2 saniye
+      - **Bundle budget:** Ana bundle &lt; 150KB gzipped
+      - **State güncellemesi:** Her işlem &lt; 16ms (60fps korunur)
       
       ### 7.2 Erişilebilirlik (WCAG 2.1 AA)
       
       - Tüm interactive elementler `tabindex` ile klavye erişiminde
       - ARIA labels: form `aria-label`, buton `aria-label`, liste `role="list"`
       - Focus state: `outline: 2px solid #2563EB; outline-offset: 2px`
-      - Kontrast: Text (#0F172A) on Background (#F8FAFC) = 16.7:1 (> 4.5:1 ✓)
+      - Kontrast: Text (#0F172A) on Background (#F8FAFC) = 16.7:1 (&gt; 4.5:1 ✓)
       - Checkbox ve buton touch target: minimum 44x44px
       - Ekran okuyucu uyumlu: Sarmalayıcı div'ler `role="listitem"` vs.
       
@@ -249,12 +249,12 @@ export function UrunGereksinimleriDokumaniPrd(props: UrunGereksinimleriDokumaniP
       ## 9. Window State (testing/dogfood)
       
       ```typescript
-      window.app = {
+      window.app = &#123;
         state: 'idle' | 'loading' | 'error',
         notesCount: number,
         lastAction: string,
         errors: string[]
-      }
+      &#125;
       ```
       
       ---
@@ -284,7 +284,7 @@ export function UrunGereksinimleriDokumaniPrd(props: UrunGereksinimleriDokumaniP
       9. [ ] Responsive: mobil 320px'de düzgün görünür
       10. [ ] Hiç emoji kullanılmamış — sadece Lucide ikonları
       11. [ ] Türkçe tüm kullanıcı metinleri
-      12. [ ] Bundle < 150KB gzipped
+      12. [ ] Bundle &lt; 150KB gzipped
     </>
   );
 }
