@@ -21,7 +21,7 @@ export function AnaSayfa(props: AnaSayfaProps) {
       <div className="hidden md:flex flex-1 max-w-md ml-8 mr-4">
       <div className="relative w-full">
       <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" style={{fontVariationSettings: "'FILL' 0"}}>search</span>
-      <input className="w-full bg-surface-container-high text-on-surface placeholder-on-surface-variant border-none rounded-full py-3 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:outline-none transition-shadow text-body-lg" placeholder="Notları ara..." type="text"/ />
+      <input className="w-full bg-surface-container-high text-on-surface placeholder-on-surface-variant border-none rounded-full py-3 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:outline-none transition-shadow text-body-lg" placeholder="Notları ara..." type="text" />
       </div>
       </div>
       <div className="flex items-center gap-4 text-[#b4c5ff]">
@@ -42,7 +42,7 @@ export function AnaSayfa(props: AnaSayfaProps) {
       {/*  Mobile SearchBar (Visible only on md hidden)  */}
       <div className="md:hidden w-full relative">
       <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" style={{fontVariationSettings: "'FILL' 0"}}>search</span>
-      <input className="w-full bg-surface-container-high text-on-surface placeholder-on-surface-variant border-none rounded-full py-4 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:outline-none transition-shadow text-body-lg shadow-sm" placeholder="Notları ara..." type="text"/ />
+      <input className="w-full bg-surface-container-high text-on-surface placeholder-on-surface-variant border-none rounded-full py-4 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:outline-none transition-shadow text-body-lg shadow-sm" placeholder="Notları ara..." type="text" />
       </div>
       {/*  NoteForm Section  */}
       <section className="max-w-3xl mx-auto">
@@ -50,10 +50,10 @@ export function AnaSayfa(props: AnaSayfaProps) {
       <div className="bg-surface-container rounded-2xl p-1 md:p-6 shadow-sm border border-outline-variant/15 backdrop-blur-sm">
       <form className="space-y-6">
       <div>
-      <input className="w-full bg-transparent text-on-surface text-[1rem] font-semibold placeholder-on-surface-variant border-none focus:ring-0 px-4 py-3 outline-none" placeholder="Başlık" required="" type="text"/ />
+      <input className="w-full bg-transparent text-on-surface text-[1rem] font-semibold placeholder-on-surface-variant border-none focus:ring-0 px-4 py-3 outline-none" placeholder="Başlık" required type="text" />
       </div>
       <div className="relative">
-      <textarea className="w-full bg-surface-container-lowest text-on-surface placeholder-on-surface-variant border-none rounded-xl focus:ring-1 focus:ring-primary/50 px-4 py-4 resize-none outline-none text-body-lg transition-all" placeholder="Açıklama" required="" rows="4"></textarea>
+      <textarea className="w-full bg-surface-container-lowest text-on-surface placeholder-on-surface-variant border-none rounded-xl focus:ring-1 focus:ring-primary/50 px-4 py-4 resize-none outline-none text-body-lg transition-all" placeholder="Açıklama" required rows={4}></textarea>
       </div>
       <div className="flex justify-end pt-2">
       <button className="bg-primary-container text-on-primary-container hover:bg-primary-container/90 active:scale-[0.98] transition-all duration-200 px-8 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-sm shadow-primary/10" type="submit">
