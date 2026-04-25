@@ -1,0 +1,282 @@
+# smoke-notlar-003812 — Ürün Gereksinimleri Dokümanı (PRD)
+
+## 1. Genel Bakış
+
+**Proje Adı:** smoke-notlar-003812  
+**Platform:** Web (React 18 + Vite + TypeScript)  
+**Tür:** Tek sayfa not kartları uygulaması (SPA)
+
+Bu proje, kullanıcıların hızlıca not kartları oluşturmasını, düzenlemesini, tamamlandı olarak işaretlemesini ve silmesini sağlayan minimal bir not yönetim aracıdır. Tüm veriler tarayıcıda localStorage ile kalıcı olarak saklanır — sunucuya ihtiyaç yoktur. Türkçe arayüz ile geniş kitlelere hitap eder.
+
+**Hedef Kitle:** Günlük görevlerini organize etmek isteyen bireysel kullanıcılar, öğrenciler, freelancerlar.
+
+---
+
+## 2. Hedefler
+
+1. **Hızlı not ekleme** — Başlık ve opsiyonel açıklama ile saniyeler içinde kart oluşturma.
+2. **Tamamlandı işaretleme** — Kartları "yapıldı" olarak işaretleyerek görsel ayrım sağlama.
+3. **Not silme** — Gereksiz kartları tek tıkla silme (onay gerektirmez).
+4. **localStorage kalıcılığı** — Sayfa yenilense bile tüm veriler korunur.
+5. **Responsive tasarım** — Mobil (320px+) ve desktop (1920px+) ekranlarda düzgün çalışır.
+6. **Erişilebilir UI** — Klavye navigasyonu ve WCAG 2.1 AA uyumlu.
+
+---
+
+## 3. Tech Stack Detayı
+
+| Katman       | Teknoloji                     |
+|--------------|------------------------------|
+| Framework    | React 18.3 (functional + hooks) |
+| Build        | Vite 5.x                     |
+| Dil          | TypeScript 5.x               |
+| Styling      | CSS Modules + CSS Variables  |
+| State        | useState + useReducer (app-level) |
+| Storage      | localStorage (no backend)    |
+| Routing      | Yok (tek sayfa)              |
+| Icons        | Lucide React                 |
+| Packaging    | Vite build → static dist     |
+
+---
+
+## 4. Fonksiyonel Gereksinimler
+
+### 4.1 Not Kartı Oluşturma
+
+- **Zorunlu alan:** Başlık (title), en az 1 karakter, maks 100 karakter.
+- **Opsiyonel alan:** Açıklama (description), maks 500 karakter.
+- **Oluşturulma tarihi:** Otomatik, `new Date().toISOString()` formatında saklanır.
+- **ID:** `crypto.randomUUID()` ile benzersiz atanır.
+- **Varsayılan durum:** `completed: false`
+- **Hata mesajları:**
+  - Boş başlık: "Başlık alanı boş bırakılamaz."
+  - Başlık > 100 karakter: "Başlık en fazla 100 karakter olabilir."
+- **Başarı davranışı:** Yeni kart listenin en üstüne eklenir, form sıfırlanır, input'a odaklanılır.
+
+### 4.2 Not Kartı Tamamlandı İşaretleme
+
+- Her kartın solunda bir onay kutusu (checkbox) bulunur.
+- Tıklandığında `completed` alanı tersine çevrilir (true ↔ false).
+- Tamamlanmış kartlar: başlık üstü çizili (text-decoration: line-through), opacity 0.6.
+- Tamamlanmamış kartlar: normal görünüm.
+- **Hata mesajı yok** — toggle anlık ve güvenli.
+
+### 4.3 Not Kartı Silme
+
+- Her kartın sağ üstünde bir "Sil" butonu (çöp kutusu ikonu) bulunur.
+- Tıklandığında kart hemen silinir (onay dialogu YOK).
+- **Hata mesajı:** Silinemezse "Not silinemedi, lütfen tekrar deneyin."
+- **Başarı davranışı:** Kart animasyonla (fade-out, 200ms) listeden çıkar.
+
+### 4.4 Not Listesi Görüntüleme
+
+- Tüm notlar kronolojik sırada (en yeni üstte) listelenir.
+- Boş durum: Ortada büyük bir ikon ve mesaj: "Henüz not eklemediniz. Yukarıdaki formu kullanarak ilk notunuzu ekleyin."
+- Liste performansı: 500 kart kapasitesi hedeflenir (>500 için virtual scroll gerekirse eklenir, başlangıçta gerekmez).
+
+### 4.5 localStorage Kalıcılığı
+
+- Her kart değişikliğinde (ekle/sil/toggle) tüm liste `localStorage.setItem('notes', JSON.stringify(notes))` ile kaydedilir.
+- Sayfa yüklendiğinde `localStorage.getItem('notes')` ile liste geri yüklenir.
+- Veri bozuksa veya JSON parse hatası alınırsa: boş liste ile başla, konsola hata logla.
+- Storage key: `smoke-notlar-003812-notes`
+
+### 4.6 Filtreleme / Arama
+
+- Liste üstünde bir arama input'u bulunur: "Notları ara..."
+- Yazıldığında anlık filtreleme (debounce yok, her keystroke'ta).
+- Başlık ve açıklama alanlarında case-insensitive substring eşleşme.
+- Eşleşme yoksa: "Sonuç bulunamadı." mesajı.
+- Arama temizlendiğinde tüm liste görünür.
+
+---
+
+## 5. Veri Modeli
+
+### Entity: Note
+
+```typescript
+interface Note {
+  id:       string;      // crypto.randomUUID()
+  title:    string;      // 1-100 karakter
+  description: string;   // 0-500 karakter, opsiyonel
+  completed: boolean;    // varsayılan: false
+  createdAt: string;     // ISO 8601 timestamp
+}
+```
+
+### localStorage Schema
+
+```
+Key:   smoke-notlar-003812-notes
+Value: JSON array of Note objects
+```
+
+---
+
+## 6. UI/UX Gereksinimler
+
+### 6.1 Design System
+
+**Aesthetic:** Minimal — beyaz alan, net sınırlar, yumuşak gölgeler.
+
+**Renk Paleti:**
+
+| Rol        | Hex       | Kullanım                                      |
+|------------|-----------|----------------------------------------------|
+| Primary    | `#2563EB` | Butonlar, aktif state, vurgu linkleri        |
+| Secondary  | `#64748B` | İkincil text, placeholder                    |
+| Background | `#F8FAFC` | Sayfa arka planı                             |
+| Surface    | `#FFFFFF` | Kart, form container arka planı              |
+| Text       | `#0F172A` | Ana içerik, başlıklar                        |
+| Border     | `#E2E8F0` | Kart sınırları, input border                 |
+| Success    | `#22C55E` | Tamamlandı işaretli kart vurgusu             |
+| Error      | `#EF4444` | Hata mesajları, silme ikonu hover            |
+| Warning    | `#F59E0B` | Opsiyonel uyarılar                           |
+
+**Tipografi:**
+
+| Element       | Font                    | Weight   | Size    |
+|---------------|-------------------------|----------|---------|
+| Heading (h1)  | Inter                   | 700      | 24px    |
+| Heading (h2)  | Inter                   | 600      | 18px    |
+| Body          | Inter                   | 400      | 14px    |
+| Small/label   | Inter                   | 400      | 12px    |
+
+**Icon Library:** Lucide React (X, Plus, Trash2, Check, Search)
+
+### 6.2 Spacing & Components
+
+**Spacing Scale (px):** 4 / 8 / 12 / 16 / 24 / 32 / 48
+
+**Border Radius:**
+- Kart container: `12px`
+- Input/Button: `8px`
+- Small badge: `4px`
+
+**Shadow:**
+- Kart: `0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)`
+- Kart hover: `0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06)`
+- Modal (varsa): `0 20px 25px rgba(0,0,0,0.15)`
+
+**Component Patterns:**
+
+| Component          | Pattern                                                            |
+|--------------------|--------------------------------------------------------------------|
+| Not ekleme formu   | Kart container içinde dikey flex, input + button                   |
+| Not kartı          | Yatay flex: checkbox (sol) | content (orta, flex-grow) | silme butonu (sağ) |
+| Arama kutusu       | Full-width input, solunda arama ikonu                              |
+| Buton              | Padding 8px 16px, border-radius 8px, primary mavi                 |
+| Boş durum          | Ortalanmış, ikon + mesaj, input form görünür                       |
+
+---
+
+## 7. Non-Functional Requirements
+
+### 7.1 Performans
+
+- **İlk yükleme:** < 1.5 saniye (Vite hızlı build hedefi)
+- **TTI (Time to Interactive):** < 2 saniye
+- **Bundle budget:** Ana bundle < 150KB gzipped
+- **State güncellemesi:** Her işlem < 16ms (60fps korunur)
+
+### 7.2 Erişilebilirlik (WCAG 2.1 AA)
+
+- Tüm interactive elementler `tabindex` ile klavye erişiminde
+- ARIA labels: form `aria-label`, buton `aria-label`, liste `role="list"`
+- Focus state: `outline: 2px solid #2563EB; outline-offset: 2px`
+- Kontrast: Text (#0F172A) on Background (#F8FAFC) = 16.7:1 (> 4.5:1 ✓)
+- Checkbox ve buton touch target: minimum 44x44px
+- Ekran okuyucu uyumlu: Sarmalayıcı div'ler `role="listitem"` vs.
+
+### 7.3 Tarayıcı Desteği
+
+- **Desktop:** Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- **Mobil:** iOS Safari 14+, Android Chrome 90+
+- **Responsive breakpoints:**
+  - Mobile: 320px – 639px (tek kolon, küçük padding)
+  - Tablet: 640px – 1023px
+  - Desktop: 1024px+
+
+---
+
+## 8. Proje Yapısı
+
+```
+smoke-notlar-003812/
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── src/
+│   ├── components/
+│   │   ├── NoteForm.tsx
+│   │   ├── NoteCard.tsx
+│   │   ├── SearchBar.tsx
+│   │   ├── EmptyState.tsx
+│   │   └── Header.tsx
+│   ├── hooks/
+│   │   ├── useNotes.ts          # CRUD + localStorage
+│   │   └── useSearch.ts         # Filtreleme
+│   ├── types/
+│   │   └── index.ts             # Note interface
+│   ├── styles/
+│   │   ├── global.css
+│   │   └── variables.css        # CSS custom properties
+│   ├── App.tsx
+│   └── main.tsx
+└── README.md
+```
+
+---
+
+## 9. Window State (testing/dogfood)
+
+```typescript
+window.app = {
+  state: 'idle' | 'loading' | 'error',
+  notesCount: number,
+  lastAction: string,
+  errors: string[]
+}
+```
+
+---
+
+## 10. Ekranlar (Zorunlu Tablo)
+
+| # | Ekran Adı           | Tür           | Açıklama                                                                    |
+|---|---------------------|---------------|-----------------------------------------------------------------------------|
+| 1 | Ana Sayfa           | main-view     | Not listesi, arama kutusu, ekleme formu — hepsi tek sayfada                |
+| 2 | Boş Durum           | empty-state   | Henüz not yokken gösterilen görsel mesaj + form                             |
+| 3 | Arama Sonuç Yok     | no-results    | Arama yapılıp eşleşme olmadığında gösterilen mesaj                          |
+| 4 | Kart Tamamlandı     | visual-state  | Tamamlandı işaretli kartın görsel durumu (line-through + soluk renk)        |
+| 5 | Hata Durumu         | error-state   | localStorage erişim hatası veya beklenmeyen hata durumunda gösterilen mesaj  |
+
+---
+
+## 11. Kabul Kriterleri (PRD Doğrulaması)
+
+1. [ ] Yeni not eklenebilir — başlık + opsiyonel açıklama ile
+2. [ ] Not tamamlandı olarak işaretlenebilir ve görsel değişir
+3. [ ] Not silinebilir (animasyonla)
+4. [ ] Sayfa yenilendiğinde tüm notlar korunur (localStorage)
+5. [ ] Arama ile notlar filtrelenebilir
+6. [ ] Boş durum mesajı gösterilir
+7. [ ] Tüm butonlar minimum 44x44px touch target
+8. [ ] Klavye ile tüm işlemler yapılabilir
+9. [ ] Responsive: mobil 320px'de düzgün görünür
+10. [ ] Hiç emoji kullanılmamış — sadece Lucide ikonları
+11. [ ] Türkçe tüm kullanıcı metinleri
+12. [ ] Bundle < 150KB gzipped
+
+Generate a SEPARATE screen design for EVERY page, view, modal, dialog, tab panel, and settings screen described in this PRD. Do NOT skip ANY screen — even if it seems minor.
+
+MANDATORY SCREENS:
+- If the PRD mentions "settings" or "ayarlar" → generate a Settings screen
+- If the PRD mentions tabs or bottom navigation → generate EACH tab view as a separate screen
+- If the PRD mentions modals (statistics, help, share, confirmation) → generate each as a separate screen
+- If the PRD mentions error states, empty states, loading states → generate those too
+- Generate at least as many screens as there are distinct views/pages/modals in the PRD
+
+All visible text must be in Turkish. Use a dark, modern theme.

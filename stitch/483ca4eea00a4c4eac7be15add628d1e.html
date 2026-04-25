@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ana Sayfa - smoke-notlar-003812</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#ffdbcd",
+                        "surface-tint": "#b4c5ff",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-surface": "#dae2fd",
+                        "outline-variant": "#434655",
+                        "primary-container": "#2563eb",
+                        "on-background": "#dae2fd",
+                        "on-primary-fixed": "#00174b",
+                        "surface-bright": "#31394d",
+                        "on-tertiary-container": "#ffede6",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "surface-container-high": "#222a3d",
+                        "on-tertiary": "#581e00",
+                        "outline": "#8d90a0",
+                        "surface-variant": "#2d3449",
+                        "surface-container": "#171f33",
+                        "on-tertiary-fixed": "#360f00",
+                        "tertiary": "#ffb596",
+                        "inverse-primary": "#0053db",
+                        "secondary-container": "#3a4a5f",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-lowest": "#060e20",
+                        "primary": "#b4c5ff",
+                        "on-secondary-container": "#a9bad3",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#bc4800",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-surface-variant": "#c3c6d7",
+                        "secondary": "#b7c8e1",
+                        "on-primary-container": "#eeefff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface": "#0b1326",
+                        "on-primary": "#002a78",
+                        "background": "#0b1326",
+                        "surface-container-highest": "#2d3449",
+                        "on-secondary": "#213145",
+                        "surface-container-low": "#131b2e",
+                        "inverse-on-surface": "#283044",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface": "#dae2fd",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-dim": "#0b1326"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "12px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "display": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-[#0b1326]/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-[#2d3449]/30 shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<h1 class="text-2xl font-bold tracking-tighter text-[#2563EB] font-headline">smoke-notlar</h1>
+<div class="hidden md:flex flex-1 max-w-md ml-8 mr-4">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full bg-surface-container-high text-on-surface placeholder-on-surface-variant border-none rounded-full py-3 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:outline-none transition-shadow text-body-lg" placeholder="Notları ara..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 text-[#b4c5ff]">
+<button class="hover:bg-[#171f33] transition-all duration-300 rounded-full p-2 active:scale-[0.97] md:hidden">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">search</span>
+</button>
+<button class="hover:bg-[#171f33] transition-all duration-300 rounded-full p-2 active:scale-[0.97]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+</button>
+<button class="hover:bg-[#171f33] transition-all duration-300 rounded-full p-2 active:scale-[0.97]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 md:px-6 pt-28 space-y-12">
+<!-- Mobile SearchBar (Visible only on md hidden) -->
+<div class="md:hidden w-full relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full bg-surface-container-high text-on-surface placeholder-on-surface-variant border-none rounded-full py-4 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:outline-none transition-shadow text-body-lg shadow-sm" placeholder="Notları ara..." type="text"/>
+</div>
+<!-- NoteForm Section -->
+<section class="max-w-3xl mx-auto">
+<h2 class="text-[1.75rem] font-semibold text-on-surface mb-6 font-headline tracking-tight">Yeni Not Ekle</h2>
+<div class="bg-surface-container rounded-2xl p-1 md:p-6 shadow-sm border border-outline-variant/15 backdrop-blur-sm">
+<form class="space-y-6">
+<div>
+<input class="w-full bg-transparent text-on-surface text-[1rem] font-semibold placeholder-on-surface-variant border-none focus:ring-0 px-4 py-3 outline-none" placeholder="Başlık" required="" type="text"/>
+</div>
+<div class="relative">
+<textarea class="w-full bg-surface-container-lowest text-on-surface placeholder-on-surface-variant border-none rounded-xl focus:ring-1 focus:ring-primary/50 px-4 py-4 resize-none outline-none text-body-lg transition-all" placeholder="Açıklama" required="" rows="4"></textarea>
+</div>
+<div class="flex justify-end pt-2">
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-container/90 active:scale-[0.98] transition-all duration-200 px-8 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-sm shadow-primary/10" type="submit">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">add</span>
+                            Ekle
+                        </button>
+</div>
+</form>
+</div>
+</section>
+<!-- Notes Grid -->
+<section class="pb-12">
+<h2 class="text-[1.75rem] font-semibold text-on-surface mb-8 font-headline tracking-tight">Son Notlar</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- NoteCard 1 -->
+<div class="bg-surface-container rounded-2xl p-6 hover:bg-surface-container-high transition-colors duration-300 group cursor-pointer relative overflow-hidden flex flex-col h-full border border-transparent hover:border-outline-variant/15">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary/20 group-hover:bg-primary/50 transition-colors"></div>
+<div class="flex justify-between items-start mb-4 pl-2">
+<h3 class="text-[1rem] font-semibold text-on-surface font-headline">Market Alışverişi</h3>
+<button class="text-on-surface-variant hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity p-1 -mr-2 -mt-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+<p class="text-body-lg text-on-surface-variant mb-6 flex-grow pl-2 line-clamp-3">
+                         Süt, ekmek, yumurta al.
+                     </p>
+<div class="flex items-center gap-2 mt-auto pl-2">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">schedule</span>
+<span class="text-[0.75rem] font-semibold text-on-surface-variant font-label tracking-wide">10 Dakika Önce</span>
+</div>
+</div>
+<!-- NoteCard 2 -->
+<div class="bg-surface-container rounded-2xl p-6 hover:bg-surface-container-high transition-colors duration-300 group cursor-pointer relative overflow-hidden flex flex-col h-full border border-transparent hover:border-outline-variant/15">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary-container/30 group-hover:bg-tertiary-container/60 transition-colors"></div>
+<div class="flex justify-between items-start mb-4 pl-2">
+<h3 class="text-[1rem] font-semibold text-on-surface font-headline">Proje Sunumu</h3>
+<button class="text-on-surface-variant hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity p-1 -mr-2 -mt-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+<p class="text-body-lg text-on-surface-variant mb-6 flex-grow pl-2 line-clamp-3">
+                         Pazartesi saat 10:00'da.
+                     </p>
+<div class="flex items-center gap-2 mt-auto pl-2">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">schedule</span>
+<span class="text-[0.75rem] font-semibold text-on-surface-variant font-label tracking-wide">2 Saat Önce</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden bg-[#0b1326]/90 backdrop-blur-lg fixed bottom-0 w-full z-50 rounded-t-2xl border-t border-[#2d3449]/20 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+<div class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3">
+<a class="flex flex-col items-center justify-center bg-[#2563eb]/10 text-[#b4c5ff] rounded-xl px-4 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="text-[11px] font-semibold tracking-wide uppercase font-label">Notlar</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#dae2fd]/40 hover:text-[#b4c5ff] transition-colors active:scale-90 duration-200 px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">archive</span>
+<span class="text-[11px] font-semibold tracking-wide uppercase font-label">Arşiv</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#dae2fd]/40 hover:text-[#b4c5ff] transition-colors active:scale-90 duration-200 px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="text-[11px] font-semibold tracking-wide uppercase font-label">Profil</span>
+</a>
+</div>
+</nav>
+</body></html>
