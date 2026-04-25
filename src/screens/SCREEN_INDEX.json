@@ -1,0 +1,56 @@
+[
+  {
+    "screenId": "89f8ae35ea4f46829ca9b2b9b4e9c2f7",
+    "title": "Ürün Gereksinimleri Dokümanı (PRD)",
+    "componentName": "UrunGereksinimleriDokumaniPrd",
+    "file": "src/screens/UrunGereksinimleriDokumaniPrd.tsx",
+    "buttons": 0,
+    "inputs": 0,
+    "links": 0
+  },
+  {
+    "screenId": "b993e98544e64726ba25ed33e9d8a5d9",
+    "title": "Arama Sonuç Yok",
+    "componentName": "AramaSonucYok",
+    "file": "src/screens/AramaSonucYok.tsx",
+    "buttons": 6,
+    "inputs": 2,
+    "links": 3
+  },
+  {
+    "screenId": "483ca4eea00a4c4eac7be15add628d1e",
+    "title": "Ana Sayfa",
+    "componentName": "AnaSayfa",
+    "file": "src/screens/AnaSayfa.tsx",
+    "buttons": 6,
+    "inputs": 3,
+    "links": 3
+  },
+  {
+    "screenId": "37a8617b01ef41229661e3e2386794f3",
+    "title": "Boş Durum",
+    "componentName": "BosDurum",
+    "file": "src/screens/BosDurum.tsx",
+    "buttons": 9,
+    "inputs": 1,
+    "links": 0
+  },
+  {
+    "screenId": "bda508fa9a5e4566a67e58fc22d7db05",
+    "title": "Hata Durumu",
+    "componentName": "HataDurumu",
+    "file": "src/screens/HataDurumu.tsx",
+    "buttons": 1,
+    "inputs": 0,
+    "links": 0
+  },
+  {
+    "screenId": "c0ad87a5cf514157ba89a417c3981f66",
+    "title": "Kart Tamamlandı Durumu",
+    "componentName": "KartTamamlandiDurumu",
+    "file": "src/screens/KartTamamlandiDurumu.tsx",
+    "buttons": 8,
+    "inputs": 0,
+    "links": 5
+  }
+]
