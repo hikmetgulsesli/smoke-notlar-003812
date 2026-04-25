@@ -30,7 +30,7 @@ export function BosDurum(props: BosDurumProps) {
       <div className="bg-surface-container-low p-6 md:p-8 rounded-[12px] flex flex-col gap-4 relative overflow-hidden group">
       {/*  Subtle Top Gradient for depth  */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-container/20 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-500"></div>
-      <input className="bg-transparent border-none text-on-surface text-2xl md:text-[1.75rem] font-headline font-semibold focus:ring-0 focus:outline-none placeholder:text-on-surface-variant/40 w-full px-0 leading-tight tracking-tight" placeholder="Not Başlığı..." type="text"/ />
+      <input className="bg-transparent border-none text-on-surface text-2xl md:text-[1.75rem] font-headline font-semibold focus:ring-0 focus:outline-none placeholder:text-on-surface-variant/40 w-full px-0 leading-tight tracking-tight" placeholder="Not Başlığı..." type="text"/>
       <textarea className="bg-transparent border-none text-on-surface-variant text-base font-body focus:ring-0 focus:outline-none placeholder:text-on-surface-variant/30 w-full px-0 resize-none min-h-[120px] leading-relaxed mt-2" placeholder="Aklınızdakileri dökmeye başlayın..."></textarea>
       <div className="flex justify-between items-center mt-4 border-t border-surface-variant/20 pt-4">
       <div className="flex gap-3">
