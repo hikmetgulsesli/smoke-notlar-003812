@@ -4,6 +4,7 @@ import { NoteForm } from './components/NoteForm';
 import { NoteCard } from './components/NoteCard';
 import { EmptyState } from './components/EmptyState';
 import { SearchBar } from './components/SearchBar';
+import { HataDurumu } from './screens/HataDurumu';
 
 type ViewTab = 'notes' | 'archive' | 'profile';
 
@@ -142,7 +143,7 @@ function searchEmptyState(query: string, onClear: () => void) {
 }
 
 export default function App() {
-  const { notes, completedCount, addNote, deleteNote, toggleNote } = useNotes();
+  const { notes, completedCount, addNote, deleteNote, toggleNote, error, clearError } = useNotes();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentView, setCurrentView] = useState<ViewTab>('notes');
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -376,6 +377,15 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 md:px-6 pt-28 space-y-12 pb-24 md:pb-12">
+        {error && (
+          <div className="w-full flex justify-center">
+            <HataDurumu
+              title={error.code === 'storage_full' ? 'Depolama Alanı Doldu' : 'Bir Sorun Oluştu'}
+              description={error.message}
+              onRetry={clearError}
+            />
+          </div>
+        )}
         {renderContent()}
       </main>
 
