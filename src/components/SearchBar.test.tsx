@@ -76,7 +76,7 @@ describe('SearchBar', () => {
       />
     );
 
-    const clearButton = screen.getByLabelText('Aramayı temizle');
+    const clearButton = screen.getByTestId('search-clear-desktop');
     fireEvent.click(clearButton);
 
     expect(onClear).toHaveBeenCalledTimes(1);
@@ -122,6 +122,6 @@ describe('SearchBar', () => {
     );
 
     expect(screen.getByLabelText('Notlarda ara')).toBeInTheDocument();
-    expect(screen.getByLabelText('Aramayı temizle')).toBeInTheDocument();
+    expect(screen.getByTestId('search-clear-desktop')).toBeInTheDocument();
   });
 });

@@ -290,10 +290,10 @@ describe('App', () => {
     fireEvent.change(searchInput, { target: { value: 'test' } });
 
     await waitFor(() => {
-      expect(screen.getByLabelText('Aramayı temizle')).toBeInTheDocument();
+      expect(screen.getByTestId('search-clear-desktop')).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByLabelText('Aramayı temizle'));
+    fireEvent.click(screen.getByTestId('search-clear-desktop'));
 
     await waitFor(() => {
       expect(searchInput).toHaveValue('');
@@ -332,7 +332,7 @@ describe('App', () => {
       expect(screen.getAllByTestId('note-title')).toHaveLength(1);
     });
 
-    fireEvent.click(screen.getByLabelText('Aramayı temizle'));
+    fireEvent.click(screen.getByTestId('search-clear-desktop'));
 
     await waitFor(() => {
       expect(screen.getAllByTestId('note-title')).toHaveLength(2);

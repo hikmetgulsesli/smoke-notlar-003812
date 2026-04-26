@@ -4,6 +4,7 @@ import { NoteForm } from './components/NoteForm';
 import { NoteCard } from './components/NoteCard';
 import { EmptyState } from './components/EmptyState';
 import { SearchBar } from './components/SearchBar';
+import { AramaSonucYok } from './screens/AramaSonucYok';
 
 export default function App() {
   const { notes, addNote, deleteNote, toggleNote } = useNotes();
@@ -99,52 +100,7 @@ export default function App() {
         {!hasNotes ? (
           <EmptyState />
         ) : !hasSearchResults && isSearching ? (
-          <section className="flex flex-col items-center text-center space-y-8 p-8 rounded-[24px]" style={{
-            backgroundColor: 'color-mix(in srgb, var(--color-surface-container-lowest) 50%, transparent)',
-            backdropFilter: 'blur(4px)',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
-            border: '1px solid color-mix(in srgb, var(--color-outline-variant) 10%, transparent)',
-          }}>
-            {/* Icon Illustration */}
-            <div className="relative flex items-center justify-center w-32 h-32 mb-4">
-              <div className="absolute inset-0 rounded-full blur-2xl" style={{ backgroundColor: 'color-mix(in srgb, var(--color-primary) 5%, transparent)' }}></div>
-              <div className="absolute inset-0 rounded-full flex items-center justify-center border shadow-inner" style={{
-                backgroundColor: 'var(--color-surface-container)',
-                borderColor: 'color-mix(in srgb, var(--color-outline-variant) 20%, transparent)',
-              }}>
-                <span className="material-symbols-outlined text-[64px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200", color: 'color-mix(in srgb, var(--color-outline) 50%, transparent)' }}>search_off</span>
-              </div>
-              <div className="absolute -top-2 -right-2 p-2 rounded-full border shadow-lg" style={{
-                backgroundColor: 'var(--color-surface-container-high)',
-                borderColor: 'color-mix(in srgb, var(--color-outline-variant) 30%, transparent)',
-              }}>
-                <span className="material-symbols-outlined text-sm" style={{ color: 'var(--color-secondary)' }}>description</span>
-              </div>
-            </div>
-            {/* Text Content */}
-            <div className="space-y-3">
-              <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight" style={{ color: 'var(--color-on-surface)' }}>Sonuç bulunamadı.</h2>
-              <p className="text-lg max-w-sm mx-auto leading-relaxed" style={{ color: 'var(--color-on-surface-variant)' }}>
-                "<span className="font-semibold" style={{ color: 'var(--color-primary)' }}>{searchQuery}</span>" için eşleşen bir sonuç bulamadık.
-              </p>
-            </div>
-            {/* Action Suggestions */}
-            <div className="w-full flex flex-col gap-4 mt-8 pt-8" style={{ borderTop: '1px solid var(--color-surface-container-high)' }}>
-              <button
-                onClick={handleClearSearch}
-                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold active:scale-[0.98] transition-all duration-200"
-                style={{
-                  backgroundColor: 'var(--color-primary-container)',
-                  color: 'var(--color-on-primary-container)',
-                  boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.2)',
-                }}
-              >
-                <span className="material-symbols-outlined text-sm">clear_all</span>
-                Aramayı Temizle
-              </button>
-              <p className="text-sm mt-2" style={{ color: 'var(--color-outline)' }}>veya farklı kelimelerle tekrar deneyin</p>
-            </div>
-          </section>
+          <AramaSonucYok query={searchQuery} onClear={handleClearSearch} />
         ) : (
           <section className="pb-12">
             <h2

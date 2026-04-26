@@ -67,6 +67,7 @@ export function SearchBar({
           type="button"
           onClick={handleClear}
           aria-label="Aramayı temizle"
+          data-testid={`search-clear-${variant}`}
           className={`absolute inset-y-0 right-0 flex items-center ${
             isMobile ? 'pr-4' : 'pr-3'
           }`}
