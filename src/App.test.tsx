@@ -362,10 +362,11 @@ describe('App', () => {
       expect(screen.getByText('Sonuç bulunamadı.')).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByText('Aramayı Temizle'));
+    fireEvent.click(screen.getByRole('button', { name: /Aramayı Temizle/i }));
 
     await waitFor(() => {
-      expect(searchInput).toHaveValue('');
+      const inputs = screen.getAllByTestId('search-input-desktop');
+      expect(inputs[0]).toHaveValue('');
       expect(screen.getByTestId('note-card')).toBeInTheDocument();
       expect(screen.queryByText('Sonuç bulunamadı.')).not.toBeInTheDocument();
     });
