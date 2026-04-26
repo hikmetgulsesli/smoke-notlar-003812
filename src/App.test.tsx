@@ -174,7 +174,7 @@ describe('App', () => {
   // Search functionality tests
   it('renders search input', () => {
     render(<App />);
-    expect(screen.getAllByLabelText('Notlarda ara')).toHaveLength(2);
+    expect(screen.getAllByLabelText('Notlarda ara')).toHaveLength(1);
   });
 
   it('filters notes when typing in search box', async () => {
@@ -395,6 +395,193 @@ describe('App', () => {
       const titles = screen.getAllByTestId('note-title');
       expect(titles).toHaveLength(1);
       expect(titles[0]).toHaveTextContent('Market Alışverişi');
+    });
+  });
+
+  // Bottom navigation tests
+  it('renders bottom navigation', () => {
+    render(<App />);
+    expect(screen.getByLabelText('Alt navigasyon')).toBeInTheDocument();
+    expect(screen.getByTestId('bottom-nav-notes')).toBeInTheDocument();
+    expect(screen.getByTestId('bottom-nav-archive')).toBeInTheDocument();
+    expect(screen.getByTestId('bottom-nav-profile')).toBeInTheDocument();
+  });
+
+  it('switches to archive view when archive tab is clicked', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Tamamlanan Not',
+          content: 'İçerik',
+          status: 'completed',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: 'note-2',
+          title: 'Aktif Not',
+          content: 'İçerik 2',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const archiveTab = screen.getByTestId('bottom-nav-archive');
+    fireEvent.click(archiveTab);
+
+    await waitFor(() => {
+      expect(screen.getByText('Arşivlenen Notlar')).toBeInTheDocument();
+      expect(screen.getByText('Tamamlanan Not')).toBeInTheDocument();
+      expect(screen.queryByText('Aktif Not')).not.toBeInTheDocument();
+    });
+  });
+
+  it('switches to profile view when profile tab is clicked', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Not 1',
+          content: 'İçerik',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: 'note-2',
+          title: 'Not 2',
+          content: 'İçerik 2',
+          status: 'completed',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const profileTab = screen.getByTestId('bottom-nav-profile');
+    fireEvent.click(profileTab);
+
+    await waitFor(() => {
+      expect(screen.getByText('Toplam Not')).toBeInTheDocument();
+      expect(screen.getByText('Aktif')).toBeInTheDocument();
+      expect(screen.getByText('Tamamlanan')).toBeInTheDocument();
+    });
+  });
+
+  it('shows archive empty state when no completed notes exist', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Aktif Not',
+          content: 'İçerik',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const archiveTab = screen.getByTestId('bottom-nav-archive');
+    fireEvent.click(archiveTab);
+
+    await waitFor(() => {
+      expect(screen.getByText('Henüz arşivlenmiş not yok.')).toBeInTheDocument();
+    });
+  });
+
+  it('shows mobile search toggle button', () => {
+    render(<App />);
+    expect(screen.getByTestId('mobile-search-toggle')).toBeInTheDocument();
+  });
+
+  it('toggles mobile search bar when mobile search button is clicked', async () => {
+    render(<App />);
+
+    const toggleButton = screen.getByTestId('mobile-search-toggle');
+
+    // Initially hidden
+    expect(screen.queryByTestId('search-input-mobile')).not.toBeInTheDocument();
+
+    // Show search
+    fireEvent.click(toggleButton);
+    await waitFor(() => {
+      expect(screen.getByTestId('search-input-mobile')).toBeInTheDocument();
+    });
+
+    // Hide search
+    fireEvent.click(toggleButton);
+    await waitFor(() => {
+      expect(screen.queryByTestId('search-input-mobile')).not.toBeInTheDocument();
+    });
+  });
+
+  it('returns to notes view when notes tab is clicked from another view', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Test',
+          content: 'İçerik',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    // Go to profile
+    fireEvent.click(screen.getByTestId('bottom-nav-profile'));
+    await waitFor(() => {
+      expect(screen.getByText('Toplam Not')).toBeInTheDocument();
+    });
+
+    // Return to notes
+    fireEvent.click(screen.getByTestId('bottom-nav-notes'));
+    await waitFor(() => {
+      expect(screen.getByText('Son Notlar')).toBeInTheDocument();
+      expect(screen.getByTestId('note-card')).toBeInTheDocument();
+    });
+  });
+
+  it('archived notes can be toggled back to active from archive view', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Arşiv Notu',
+          content: 'İçerik',
+          status: 'completed',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    fireEvent.click(screen.getByTestId('bottom-nav-archive'));
+    await waitFor(() => {
+      expect(screen.getByText('Arşivlenen Notlar')).toBeInTheDocument();
+    });
+
+    const toggleButton = screen.getByTestId('note-toggle');
+    fireEvent.click(toggleButton);
+
+    await waitFor(() => {
+      // After toggling to active, it disappears from archive view
+      expect(screen.getByText('Henüz arşivlenmiş not yok.')).toBeInTheDocument();
     });
   });
 });
