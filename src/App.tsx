@@ -11,7 +11,7 @@ export default function App() {
 
   const filteredNotes = useMemo(() => {
     if (!searchQuery.trim()) return notes;
-    const query = searchQuery.toLowerCase().trim();
+    const query = searchQuery.toLocaleLowerCase('tr-TR').trim();
     return notes.filter(
       (note) =>
         note.title.toLowerCase().includes(query) ||
@@ -57,13 +57,6 @@ export default function App() {
             />
           </div>
           <div className="flex items-center gap-2" style={{ color: 'var(--color-primary-fixed-dim)' }}>
-            <button
-              className="rounded-full p-2 md:hidden"
-              style={{ transition: 'background-color 200ms ease' }}
-              aria-label="Ara"
-            >
-              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0" }}>search</span>
-            </button>
             <button
               className="rounded-full p-2"
               style={{ transition: 'background-color 200ms ease' }}

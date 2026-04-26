@@ -68,18 +68,11 @@ export function SearchBar({
           onClick={handleClear}
           aria-label="Aramayı temizle"
           data-testid={`search-clear-${variant}`}
-          className={`absolute inset-y-0 right-0 flex items-center ${
+          className={`absolute inset-y-0 right-0 flex items-center hover:text-on-surface transition-colors duration-200 ${
             isMobile ? 'pr-4' : 'pr-3'
           }`}
           style={{
             color: 'var(--color-outline)',
-            transition: 'color 200ms ease, transform 150ms ease',
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-on-surface)';
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-outline)';
           }}
         >
           <span className="material-symbols-outlined">close</span>
