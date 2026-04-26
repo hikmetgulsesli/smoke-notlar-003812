@@ -4,7 +4,6 @@ import { NoteForm } from './components/NoteForm';
 import { NoteCard } from './components/NoteCard';
 import { EmptyState } from './components/EmptyState';
 import { SearchBar } from './components/SearchBar';
-import { HataDurumu } from './screens/HataDurumu';
 
 type ViewTab = 'notes' | 'archive' | 'profile';
 
@@ -378,13 +377,36 @@ export default function App() {
 
       <main className="max-w-7xl mx-auto px-4 md:px-6 pt-28 space-y-12 pb-24 md:pb-12">
         {error && (
-          <div className="w-full flex justify-center">
-            <HataDurumu
-              title={error.code === 'storage_full' ? 'Depolama Alanı Doldu' : 'Bir Sorun Oluştu'}
-              description={error.message}
-              onRetry={clearError}
-            />
-          </div>
+          <section
+            className="w-full rounded-2xl p-6 text-center border"
+            style={{
+              backgroundColor: 'color-mix(in srgb, var(--color-error-container) 30%, transparent)',
+              borderColor: 'color-mix(in srgb, var(--color-error) 20%, transparent)',
+            }}
+            role="alert"
+            aria-live="polite"
+          >
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <span className="material-symbols-outlined" style={{ color: 'var(--color-error)' }}>error</span>
+              <h2 className="text-lg font-semibold font-headline" style={{ color: 'var(--color-on-error-container)' }}>
+                {error.code === 'storage_full' ? 'Depolama Alanı Doldu' : 'Bir Sorun Oluştu'}
+              </h2>
+            </div>
+            <p className="text-sm mb-4" style={{ color: 'var(--color-on-surface-variant)' }}>
+              {error.message}
+            </p>
+            <button
+              onClick={clearError}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm cursor-pointer active:scale-[0.98] transition-transform duration-200"
+              style={{
+                backgroundColor: 'var(--color-primary-container)',
+                color: 'var(--color-on-primary-container)',
+              }}
+            >
+              <span className="material-symbols-outlined text-sm">close</span>
+              Kapat
+            </button>
+          </section>
         )}
         {renderContent()}
       </main>
