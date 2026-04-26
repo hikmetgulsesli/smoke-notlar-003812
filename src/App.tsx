@@ -132,6 +132,7 @@ export default function App() {
             <div className="w-full flex flex-col gap-4 mt-8 pt-8" style={{ borderTop: '1px solid var(--color-surface-container-high)' }}>
               <button
                 onClick={handleClearSearch}
+                data-testid="clear-search-button"
                 className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold active:scale-[0.98] transition-all duration-200"
                 style={{
                   backgroundColor: 'var(--color-primary-container)',

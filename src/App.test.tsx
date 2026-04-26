@@ -362,7 +362,7 @@ describe('App', () => {
       expect(screen.getByText('Sonuç bulunamadı.')).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByRole('button', { name: /Aramayı Temizle/i }));
+    fireEvent.click(screen.getByTestId('clear-search-button'));
 
     await waitFor(() => {
       const inputs = screen.getAllByTestId('search-input-desktop');
