@@ -14,7 +14,6 @@ export function NoteForm({ onAddNote }: NoteFormProps) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validate = useCallback((): boolean => {
     const newErrors: FormErrors = {};
@@ -41,7 +40,6 @@ export function NoteForm({ onAddNote }: NoteFormProps) {
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     if (validate()) {
       onAddNote(title.trim(), content.trim());
@@ -49,8 +47,6 @@ export function NoteForm({ onAddNote }: NoteFormProps) {
       setContent('');
       setErrors({});
     }
-
-    setIsSubmitting(false);
   }, [title, content, validate, onAddNote]);
 
   const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +106,6 @@ export function NoteForm({ onAddNote }: NoteFormProps) {
             <button
               className={styles.submitButton}
               type="submit"
-              disabled={isSubmitting}
               aria-label="Not ekle"
             >
               <span className={`material-symbols-outlined ${styles.buttonIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>add</span>
