@@ -584,4 +584,43 @@ describe('App', () => {
       expect(screen.getByText('Henüz arşivlenmiş not yok.')).toBeInTheDocument();
     });
   });
+
+  it('displays error state when localStorage has corrupted data', () => {
+    localStorage.setItem('setfarm-notlar', 'not-valid-json');
+    render(<App />);
+
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(screen.getByText('Bir Sorun Oluştu')).toBeInTheDocument();
+  });
+
+  it('clears error state when close button is clicked', () => {
+    localStorage.setItem('setfarm-notlar', 'not-valid-json');
+    render(<App />);
+
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: /kapat/i });
+    fireEvent.click(closeButton);
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
+  it('does not show error banner when localStorage is valid', () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Test',
+          content: 'İçerik',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
 });
