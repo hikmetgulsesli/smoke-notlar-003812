@@ -3,12 +3,23 @@ import type { Note } from '../types';
 
 const STORAGE_KEY = 'setfarm-notlar';
 
+function isNoteArray(value: unknown): value is Note[] {
+  return Array.isArray(value);
+}
+
 export function useNotes() {
   const [notes, setNotes] = useState<Note[]>(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      const parsed = raw ? JSON.parse(raw) as Note[] : [];
-      return parsed.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      if (!isNoteArray(parsed)) return [];
+      // Sort chronologically: newest first (higher timestamp = more recent)
+      return parsed.sort((a, b) => {
+        const ta = typeof a.createdAt === 'string' ? new Date(a.createdAt).getTime() : 0;
+        const tb = typeof b.createdAt === 'string' ? new Date(b.createdAt).getTime() : 0;
+        return tb - ta;
+      });
     } catch {
       return [];
     }
