@@ -170,4 +170,230 @@ describe('App', () => {
     render(<App />);
     expect(screen.getByText('Son Notlar')).toBeInTheDocument();
   });
+
+  // Search functionality tests
+  it('renders search input', () => {
+    render(<App />);
+    expect(screen.getByLabelText('Notlarda ara')).toBeInTheDocument();
+  });
+
+  it('filters notes when typing in search box', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Market Alışverişi',
+          content: 'Süt, ekmek, yumurta al.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: 'note-2',
+          title: 'Proje Sunumu',
+          content: 'Pazartesi saat 10:00.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const searchInput = screen.getByLabelText('Notlarda ara');
+    fireEvent.change(searchInput, { target: { value: 'Market' } });
+
+    await waitFor(() => {
+      const titles = screen.getAllByTestId('note-title');
+      expect(titles).toHaveLength(1);
+      expect(titles[0]).toHaveTextContent('Market Alışverişi');
+    });
+  });
+
+  it('filters notes by content', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Market Alışverişi',
+          content: 'Süt, ekmek, yumurta al.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: 'note-2',
+          title: 'Proje Sunumu',
+          content: 'Pazartesi saat 10:00.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const searchInput = screen.getByLabelText('Notlarda ara');
+    fireEvent.change(searchInput, { target: { value: 'Pazartesi' } });
+
+    await waitFor(() => {
+      const titles = screen.getAllByTestId('note-title');
+      expect(titles).toHaveLength(1);
+      expect(titles[0]).toHaveTextContent('Proje Sunumu');
+    });
+  });
+
+  it('shows no results state when search has no matches', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Market Alışverişi',
+          content: 'Süt, ekmek, yumurta al.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const searchInput = screen.getByLabelText('Notlarda ara');
+    fireEvent.change(searchInput, { target: { value: 'olmayan bir not' } });
+
+    await waitFor(() => {
+      expect(screen.getByText('Sonuç bulunamadı.')).toBeInTheDocument();
+      expect(screen.getByText(/olmayan bir not/)).toBeInTheDocument();
+    });
+  });
+
+  it('clears search when clear button is clicked', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Market Alışverişi',
+          content: 'Süt, ekmek, yumurta al.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const searchInput = screen.getByLabelText('Notlarda ara');
+    fireEvent.change(searchInput, { target: { value: 'test' } });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Aramayı temizle')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByLabelText('Aramayı temizle'));
+
+    await waitFor(() => {
+      expect(searchInput).toHaveValue('');
+      expect(screen.getByTestId('note-card')).toBeInTheDocument();
+    });
+  });
+
+  it('shows all notes when search is cleared', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Market Alışverişi',
+          content: 'Süt, ekmek, yumurta al.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          id: 'note-2',
+          title: 'Proje Sunumu',
+          content: 'Pazartesi saat 10:00.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const searchInput = screen.getByLabelText('Notlarda ara');
+    fireEvent.change(searchInput, { target: { value: 'Market' } });
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId('note-title')).toHaveLength(1);
+    });
+
+    fireEvent.click(screen.getByLabelText('Aramayı temizle'));
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId('note-title')).toHaveLength(2);
+    });
+  });
+
+  it('clears search via "Aramayı Temizle" button in no results state', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Market Alışverişi',
+          content: 'Süt, ekmek, yumurta al.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const searchInput = screen.getByLabelText('Notlarda ara');
+    fireEvent.change(searchInput, { target: { value: 'olmayan bir not' } });
+
+    await waitFor(() => {
+      expect(screen.getByText('Sonuç bulunamadı.')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Aramayı Temizle'));
+
+    await waitFor(() => {
+      expect(searchInput).toHaveValue('');
+      expect(screen.getByTestId('note-card')).toBeInTheDocument();
+      expect(screen.queryByText('Sonuç bulunamadı.')).not.toBeInTheDocument();
+    });
+  });
+
+  it('search is case-insensitive', async () => {
+    localStorage.setItem(
+      'setfarm-notlar',
+      JSON.stringify([
+        {
+          id: 'note-1',
+          title: 'Market Alışverişi',
+          content: 'Süt, ekmek, yumurta al.',
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      ])
+    );
+    render(<App />);
+
+    const searchInput = screen.getByLabelText('Notlarda ara');
+    fireEvent.change(searchInput, { target: { value: 'MARKET' } });
+
+    await waitFor(() => {
+      const titles = screen.getAllByTestId('note-title');
+      expect(titles).toHaveLength(1);
+      expect(titles[0]).toHaveTextContent('Market Alışverişi');
+    });
+  });
 });
