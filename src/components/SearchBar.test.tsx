@@ -91,7 +91,7 @@ describe('SearchBar', () => {
       />
     );
 
-    const input = screen.getByLabelText('Notlarda ara');
+    const input = screen.getByTestId('search-input-desktop');
     expect(input).toHaveClass('py-2');
     expect(input).toHaveClass('rounded-xl');
   });
@@ -106,7 +106,7 @@ describe('SearchBar', () => {
       />
     );
 
-    const input = screen.getByLabelText('Notlarda ara');
+    const input = screen.getByTestId('search-input-mobile');
     expect(input).toHaveClass('py-4');
     expect(input).toHaveClass('rounded-2xl');
     expect(input).toHaveClass('text-lg');

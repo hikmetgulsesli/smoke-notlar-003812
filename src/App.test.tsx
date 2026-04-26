@@ -174,7 +174,7 @@ describe('App', () => {
   // Search functionality tests
   it('renders search input', () => {
     render(<App />);
-    expect(screen.getByLabelText('Notlarda ara')).toBeInTheDocument();
+    expect(screen.getAllByLabelText('Notlarda ara')).toHaveLength(2);
   });
 
   it('filters notes when typing in search box', async () => {
@@ -201,7 +201,7 @@ describe('App', () => {
     );
     render(<App />);
 
-    const searchInput = screen.getByLabelText('Notlarda ara');
+    const searchInput = screen.getByTestId('search-input-desktop');
     fireEvent.change(searchInput, { target: { value: 'Market' } });
 
     await waitFor(() => {
@@ -235,7 +235,7 @@ describe('App', () => {
     );
     render(<App />);
 
-    const searchInput = screen.getByLabelText('Notlarda ara');
+    const searchInput = screen.getByTestId('search-input-desktop');
     fireEvent.change(searchInput, { target: { value: 'Pazartesi' } });
 
     await waitFor(() => {
@@ -261,7 +261,7 @@ describe('App', () => {
     );
     render(<App />);
 
-    const searchInput = screen.getByLabelText('Notlarda ara');
+    const searchInput = screen.getByTestId('search-input-desktop');
     fireEvent.change(searchInput, { target: { value: 'olmayan bir not' } });
 
     await waitFor(() => {
@@ -286,7 +286,7 @@ describe('App', () => {
     );
     render(<App />);
 
-    const searchInput = screen.getByLabelText('Notlarda ara');
+    const searchInput = screen.getByTestId('search-input-desktop');
     fireEvent.change(searchInput, { target: { value: 'test' } });
 
     await waitFor(() => {
@@ -325,7 +325,7 @@ describe('App', () => {
     );
     render(<App />);
 
-    const searchInput = screen.getByLabelText('Notlarda ara');
+    const searchInput = screen.getByTestId('search-input-desktop');
     fireEvent.change(searchInput, { target: { value: 'Market' } });
 
     await waitFor(() => {
@@ -355,7 +355,7 @@ describe('App', () => {
     );
     render(<App />);
 
-    const searchInput = screen.getByLabelText('Notlarda ara');
+    const searchInput = screen.getByTestId('search-input-desktop');
     fireEvent.change(searchInput, { target: { value: 'olmayan bir not' } });
 
     await waitFor(() => {
@@ -387,7 +387,7 @@ describe('App', () => {
     );
     render(<App />);
 
-    const searchInput = screen.getByLabelText('Notlarda ara');
+    const searchInput = screen.getByTestId('search-input-desktop');
     fireEvent.change(searchInput, { target: { value: 'MARKET' } });
 
     await waitFor(() => {

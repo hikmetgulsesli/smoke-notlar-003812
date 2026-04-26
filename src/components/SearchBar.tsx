@@ -51,6 +51,7 @@ export function SearchBar({
         onChange={handleChange}
         placeholder={placeholder}
         aria-label="Notlarda ara"
+        data-testid={`search-input-${variant}`}
         className={`block w-full border-none text-on-surface placeholder-on-surface-variant focus:ring-1 focus:ring-primary focus:outline-none transition-colors duration-200 ${
           isMobile
             ? 'pl-12 pr-12 py-4 rounded-2xl bg-surface-container-high text-lg'
