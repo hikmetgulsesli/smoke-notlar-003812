@@ -27,6 +27,9 @@ function isNoteArray(value: unknown): value is Note[] {
 
 function getErrorFromStorageError(err: unknown): UseNotesError {
   if (err instanceof Error) {
+    if (err.name === 'SyntaxError') {
+      return { message: 'Not verileri okunamadı (bozuk JSON).', code: 'parse_error' };
+    }
     if (err.name === 'QuotaExceededError' || err.message.includes('quota') || err.message.includes('full')) {
       return { message: 'Depolama alanı doldu. Bazı notlar kaydedilemedi.', code: 'storage_full' };
     }
@@ -44,6 +47,31 @@ export function useNotes() {
       if (!raw) return [];
       const parsed = JSON.parse(raw);
       if (!isNoteArray(parsed)) {
+        // Attempt to recover valid notes instead of wiping everything
+        const validNotes: Note[] = [];
+        const invalidIndices: number[] = [];
+        if (Array.isArray(parsed)) {
+          for (let i = 0; i < parsed.length; i++) {
+            if (isValidNote(parsed[i])) {
+              validNotes.push(parsed[i] as Note);
+            } else {
+              invalidIndices.push(i);
+            }
+          }
+        }
+        if (validNotes.length > 0) {
+          setError({
+            message: `Bazı notlar (${invalidIndices.length} adet) okunamadı ve filtrelendi. Lütfen veri bütünlüğünü kontrol edin.`,
+            code: 'validation_error',
+          });
+          // Sort chronologically: newest first
+          return validNotes.sort((a, b) => {
+            const ta = typeof a.createdAt === 'string' ? new Date(a.createdAt).getTime() : 0;
+            const tb = typeof b.createdAt === 'string' ? new Date(b.createdAt).getTime() : 0;
+            return tb - ta;
+          });
+        }
+        // All data is corrupt — start fresh
         setError({ message: 'Not verisi bozuk. Lütfen tarayıcı depolamasını temizleyin.', code: 'validation_error' });
         return [];
       }
@@ -54,7 +82,8 @@ export function useNotes() {
         return tb - ta;
       });
     } catch (err) {
-      setError(getErrorFromStorageError(err));
+      const parsedError = getErrorFromStorageError(err);
+      setError(parsedError);
       return [];
     }
   });

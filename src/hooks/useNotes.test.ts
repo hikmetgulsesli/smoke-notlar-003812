@@ -199,7 +199,7 @@ describe('useNotes', () => {
 
     expect(result.current.notes).toHaveLength(0);
     expect(result.current.error).not.toBeNull();
-    expect(result.current.error?.code).toBe('unknown');
+    expect(result.current.error?.code).toBe('parse_error');
   });
 
   it('returns empty array and sets error for corrupted note data', () => {
@@ -219,7 +219,7 @@ describe('useNotes', () => {
 
     const { result } = renderHook(() => useNotes());
 
-    expect(result.current.notes).toHaveLength(0); // entire array rejected if any invalid
+    expect(result.current.notes).toHaveLength(1); // valid note is recovered
     expect(result.current.error).not.toBeNull();
   });
 
