@@ -142,7 +142,7 @@ function searchEmptyState(query: string, onClear: () => void) {
 }
 
 export default function App() {
-  const { notes, completedCount, addNote, deleteNote, toggleNote } = useNotes();
+  const { notes, completedCount, addNote, deleteNote, toggleNote, error, clearError } = useNotes();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentView, setCurrentView] = useState<ViewTab>('notes');
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -376,6 +376,38 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 md:px-6 pt-28 space-y-12 pb-24 md:pb-12">
+        {error && (
+          <section
+            className="w-full rounded-2xl p-6 text-center border"
+            style={{
+              backgroundColor: 'color-mix(in srgb, var(--color-error-container) 30%, transparent)',
+              borderColor: 'color-mix(in srgb, var(--color-error) 20%, transparent)',
+            }}
+            role="alert"
+            aria-live="polite"
+          >
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <span className="material-symbols-outlined" style={{ color: 'var(--color-error)' }}>error</span>
+              <h2 className="text-lg font-semibold font-headline" style={{ color: 'var(--color-on-error-container)' }}>
+                {error.code === 'storage_full' ? 'Depolama Alanı Doldu' : 'Bir Sorun Oluştu'}
+              </h2>
+            </div>
+            <p className="text-sm mb-4" style={{ color: 'var(--color-on-surface-variant)' }}>
+              {error.message}
+            </p>
+            <button
+              onClick={clearError}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm cursor-pointer active:scale-[0.98] transition-transform duration-200"
+              style={{
+                backgroundColor: 'var(--color-primary-container)',
+                color: 'var(--color-on-primary-container)',
+              }}
+            >
+              <span className="material-symbols-outlined text-sm">close</span>
+              Kapat
+            </button>
+          </section>
+        )}
         {renderContent()}
       </main>
 
